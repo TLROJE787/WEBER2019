@@ -1,0 +1,105 @@
+<template>
+    <div>
+        <h3>添加用户</h3>
+    <div style="margin-top: 6px;width:420px;">
+      <Form :model="formLeft" label-position="left" :label-width="100">
+        <!-- 起止时间，地点，课程名称，所需人数； -->
+        <!-- 姓名，职称，简介，手机号 -->
+
+        <FormItem label="姓名">
+          <Input v-model="formLeft.input1"></Input>
+        </FormItem>
+        <FormItem label="职称">
+          <Input v-model="formLeft.input2"></Input>
+        </FormItem>
+        <FormItem label="简介">
+          <Input v-model="formLeft.input3"></Input>
+        </FormItem>
+        <FormItem label="手机号">
+          <Input v-model="formLeft.input4"></Input>
+        </FormItem>
+                <FormItem>
+            <Button type="primary" @click="handleSubmit('formDynamic')">Submit</Button>
+            <Button @click="handleReset('formDynamic')" style="margin-left: 8px">Reset</Button>
+        </FormItem>
+      </Form>
+    </div>
+        <Table border :columns="columns7" :data="data6"></Table>
+    </div>
+</template>
+<script>
+export default {
+    data(){
+        return {
+                    // <!-- 有当前/历史任务信息，所有其他用户回复信息，任务结果 -->
+                columns7: [
+                    {
+                        title: '当前任务信息',
+                        key: 'name',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Icon', {
+                                    props: {
+                                        type: 'person'
+                                    }
+                                }),
+                                h('strong', params.row.name)
+                            ]);
+                        }
+                    },
+                    {
+                        title: '历史任务信息',
+                        key: 'age'
+                    },
+                    {
+                        title: '其他用户回复信息',
+                        key: 'address'
+                    },{
+                        title: '任务结果',
+                        key: 'phone_number'
+                    } 
+                ],
+                data6: [
+                    {
+                        name: 'John Brown',
+                        age: 18,
+                        address: 'New York No. 1 Lake Park',
+                        phone_number:123125
+                    },
+                    {
+                        name: 'Jim Green',
+                        age: 24,
+                        address: 'London No. 1 Lake Park'
+                    },
+                    {
+                        name: 'Joe Black',
+                        age: 30,
+                        address: 'Sydney No. 1 Lake Park'
+                    },
+                    {
+                        name: 'Jon Snow',
+                        age: 26,
+                        address: 'Ottawa No. 2 Lake Park'
+                    }
+                ],
+      formLeft: {
+        input1: "",
+        input2: "",
+        input3: "",
+        input4: "",
+      },
+            }
+        },
+        methods: {
+            show (index) {
+                this.$Modal.info({
+                    title: 'User Info',
+                    content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
+                })
+            },
+            remove (index) {
+                this.data6.splice(index, 1);
+            }
+        }
+}
+</script>
